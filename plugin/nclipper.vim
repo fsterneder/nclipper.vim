@@ -7,7 +7,7 @@ function! s:nclipper(with_filename)
   let max_len = len(end)
   let value = (a:with_filename ? @% . ":" . "\n" : '') .
         \ join(map(getline(begin, end), g:nclipper_format), "\n")
-  call setreg('l', value, "V")
+  call setreg('+', value, "V")
 
 endfunction
 
