@@ -7,10 +7,7 @@ function! s:nclipper(with_filename)
   let max_len = len(end)
   let value = (a:with_filename ? @% . ":" . "\n" : '') .
         \ join(map(getline(begin, end), g:nclipper_format), "\n")
-  if has('xterm_clipboard')
-    call setreg('+', value, "V")
-  else
-    call setreg('"', value, "V")
+  call setreg('l', value, "V")
   endif
 
 endfunction
@@ -19,8 +16,8 @@ vnoremap <silent> <Plug>(nclipper) :<C-u>call <SID>nclipper(0)<Cr>
 vnoremap <silent> <Plug>(nclipper-with-filename) :<C-u>call <SID>nclipper(1)<Cr>
 if (!exists('g:nclipper_nomap') || !g:nclipper_nomap)
 \   && !hasmapto('<Plug>(nclipper)', 'v', 0)
-  silent! vmap <unique> <C-y> <Plug>(nclipper)
-  silent! vmap <unique> <M-y> <Plug>(nclipper-with-filename)
+  silent! vmap <unique> <M-y> <Plug>(nclipper)
+  silent! vmap <unique> <C-y> <Plug>(nclipper-with-filename)
 endif
 
 if !exists('g:nclipper_format')
